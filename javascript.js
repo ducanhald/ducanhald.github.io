@@ -1,14 +1,27 @@
+const pokemonContainer = document.querySelector(".pokemon-container");
 const buttons = document.querySelectorAll(".button-container button");
+const page = document.querySelectorAll(".page");
+const heading = document.querySelector("#heading")
+const khuvuc = [
+    ["Châu Á", 1, 100],
+    ["Châu Phi", 101, 200],
+    ["Châu Âu", 201, 300],
+    ["Châu Đại Dương", 301, 400],
+    ["Châu Mỹ", 401, 500]
+];
+let kvhientai = 0;
+let firstTime = true;
 const searchBoxContainer = document.createElement("div");
 searchBoxContainer.setAttribute("class", "search-box-container");
 searchBoxContainer.innerHTML = `<input type="text" class="search-box" placeholder="Tìm Kiếm Pokemon"></input>
 <i class="fas fa-search"></i>`;
-const pokemonContainer = document.querySelector(".pokemon-container");
 async function getPokemons(pokemonStartID, pokemonEndID) {
+
 
     buttons.forEach((element) => {
         element.classList.add("chonpokemon");
     });
+
 
     const responses = [];
     for (let id = pokemonStartID; id <= pokemonEndID; id++) {
@@ -20,7 +33,7 @@ async function getPokemons(pokemonStartID, pokemonEndID) {
 
 
     pokemonContainer.innerHTML = "";
-    let firstTime = true;
+
     if (firstTime) {
         document.body.insertBefore(searchBoxContainer, pokemonContainer);
         firstTime = false;
@@ -44,7 +57,7 @@ async function getPokemons(pokemonStartID, pokemonEndID) {
           <h5> Hệ : ${pokemonTypes.join(" / ").replace(/\b\w/g, (ch) => ch.toUpperCase())} </h5>
         </div>
         <div class="card_back">
-          <h5 class="poke-info"> Thông Số Chi Tiết :  </h5>
+          <h5 class="poke-name"> Chỉ số của : ${pokemonName.replace(/\w/, (ch) =>ch.toUpperCase())} </h5>
           <div class="poke-stats-name">Máu: ${el.stats[0].base_stat}</div>
           <div class="poke-stats-name">Tấn Công: ${el.stats[1].base_stat}</div>
           <div class="poke-stats-name">Phòng thủ: ${el.stats[2].base_stat}</div>
@@ -57,6 +70,9 @@ async function getPokemons(pokemonStartID, pokemonEndID) {
 		`;
     });
 
+    setTimeout(() => {
+        buttons.forEach((el) => { el.classList.remove("chonpokemon"); });
+    }, 0);
 
     instantiateListener();
 }
@@ -78,16 +94,7 @@ function instantiateListener() {
         });
     });
 }
-const khuvuc = [
-    ["Châu Á", 1, 100],
-    ["Châu Phi", 101, 200],
-    ["Châu Âu", 201, 300],
-    ["Châu Đại Dương", 301, 400],
-    ["Châu Mỹ", 401, 500]
-];
-let kvhientai = 0;
-const page = document.querySelectorAll(".page");
-const heading = document.querySelector("#heading")
+
 buttons.forEach((el) => {
     el.addEventListener("click", (e) => {
         const searchBox = document.querySelector(".search-box");
